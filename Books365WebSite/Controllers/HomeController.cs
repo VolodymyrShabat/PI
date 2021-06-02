@@ -18,13 +18,11 @@ namespace Books365WebSite.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ILogger<HomeController> _logger;
         private Context _db;
         private UserManager<User> _userManager;
 
-        public HomeController(ILogger<HomeController> logger,UserManager<User> userManager, Context db)
+        public HomeController(UserManager<User> userManager, Context db)
         {
-            _logger = logger;
             _db = db;
             _userManager = userManager;
         }
