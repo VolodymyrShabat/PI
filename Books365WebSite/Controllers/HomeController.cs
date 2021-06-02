@@ -58,6 +58,7 @@ namespace Books365WebSite.Controllers
                          join statuses in statusesOfUser on book.Isbn equals statuses.BookId
                          select new { Isbn = book.Isbn, Read = statuses.PagesRead, Date = statuses.DateStarted, Author = book.Author, Title = book.Title, Pages = book.Pages, Genre = book.Genre, Status = statuses.Status };
 
+
             List<ReadingStatusViewModel> data = new();
             foreach (var item in result)
             {
