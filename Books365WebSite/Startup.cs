@@ -1,4 +1,6 @@
 
+using Books365WebSite.Infrustructure;
+using Books365WebSite.Interfaces;
 using Books365WebSite.Models;
 using Books365WebSite.Services;
 using Microsoft.AspNetCore.Builder;
@@ -39,6 +41,8 @@ namespace Books365WebSite
             }
                 ).AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
             //services.AddAuthentication().AddGoogle().AddFacebook();
+            services.AddScoped<IRepository, Repository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,12 +1,11 @@
 using Books365WebSite.Controllers;
+using Books365WebSite.Infrustructure;
 using Books365WebSite.Models;
 using Books365WebSite.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace Books365Website.Tests
@@ -30,22 +29,23 @@ namespace Books365Website.Tests
             var context = _serviceProvider.GetService<Context>();
 
             //Act
-            HomeController controller = new HomeController(_userManager, context);
+            HomeController controller = new HomeController(new Repository(context, _userManager));
             ViewResult result = controller.Index() as ViewResult;
 
             //Assert
+            Assert.IsType<ViewResult>(result);
             Assert.NotNull(result);
         }
 
         [Fact]
-        public async void GetBooksHomeControllerTest()
+        public void GetBooksHomeControllerTest()
         {
             //Arrange
             var context = _serviceProvider.GetService<Context>();
 
             //Act
-            HomeController controller = new HomeController(_userManager, context);
-            ViewResult result = await controller.GetBooks() as ViewResult;
+            HomeController controller = new HomeController(new Repository(context, _userManager));
+            ViewResult result = controller.GetBooks() as ViewResult;
 
             //Assert
             Assert.NotNull(result);
@@ -58,11 +58,11 @@ namespace Books365Website.Tests
             var context = _serviceProvider.GetService<Context>();
 
             //Act
-            HomeController controller = new HomeController(_userManager, context);
+            HomeController controller = new HomeController(new Repository(context, _userManager));
             ViewResult result = controller.Index() as ViewResult;
-            
-            
+
             //Assert
+            Assert.IsType<ViewResult>(result);
             Assert.NotNull(result);
         }
 
@@ -84,7 +84,7 @@ namespace Books365Website.Tests
             await context.SaveChangesAsync();
 
             //Act
-            HomeController controller = new HomeController(_userManager, context);
+            HomeController controller = new HomeController(new Repository(context, _userManager));
 
             ViewResult result = await controller.Upsert(fakeBook.Isbn) as ViewResult;
             CreatingViewModel model = (CreatingViewModel)result.Model;
@@ -98,6 +98,8 @@ namespace Books365Website.Tests
             Assert.Equal(model.Book.Title, fakeBook.Title);
             Assert.Equal(model.Book.Genre, fakeBook.Genre);
             Assert.Null(model.Status);
+            Assert.IsType<CreatingViewModel>(model);
+
         }
     }
 }

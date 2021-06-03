@@ -2,7 +2,7 @@
 
 namespace Books365WebSite.Migrations
 {
-    public partial class Update : Migration
+    public partial class Last : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
